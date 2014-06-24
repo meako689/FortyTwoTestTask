@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>InfoPage</title>
+</head>
+<body>
+
+<table border="1">
+	  <tr >
+	    <td>first name</td>
+		<td>second name</td>
+		<td>bio</td>
+		<td>contacts</td>
+		<td>email</td>
+        <td>jid</td>
+        <td>skype</td>
+	  </tr>
+		{% for info in allinfo %}
+	  	<tr >
+			<td>{{ info.info_firstname }}</td>
+			<td>{{ info.info_lastname }}</td>
+			<td>{{ info.info_bio }}</td>
+			<td>{{ info.info_email }}</td>
+			<td>{{ info.info_jabber }}</td>
+            <td>{{ info.info_skype  }}</td>
+
+
+		</tr>
+		 {% endfor %}
+</table>
+<p>Test Template</p>
+
+</body>
+</html>
+
