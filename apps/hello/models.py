@@ -13,3 +13,4 @@ class Info(models.Model):
     info_jabber = models.CharField(max_length=30) # Is it better to use models.EmailField() ???
     info_other = models.TextField()
     info_skype = models.CharField(max_length=15)
+

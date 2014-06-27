@@ -7,7 +7,9 @@ urlpatterns = patterns('',
 
 
 
-    url(r'^', 'hello.views.show_info'),
+    url(r'^messages/', 'hello.views.get_messages'),
+    url(r'^info/', 'hello.views.show_info'),
+
 
 
 
