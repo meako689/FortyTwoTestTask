@@ -33,7 +33,7 @@ class DataTest(TestCase):
     def test_1(self):
         ''' will error on assertion'''
         Buddy = Info.objects.get(info_firstname="Buddy")
-        self.assertEqual(Buddy.info_firstname, "Buddy")
+        self.assertEqual(Buddy.info_firstname, "Budd")
 
 
 if __name__ == '__main__':  #7
