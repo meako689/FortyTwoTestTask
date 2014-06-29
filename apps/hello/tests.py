@@ -1,6 +1,6 @@
 from django.test import TestCase
 from apps.hello.models import Info
-from selenium import webdriver
+from apps.selenium import webdriver
 import unittest
 
 class DataOutTest(unittest.TestCase):
@@ -11,10 +11,10 @@ class DataOutTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_can_start_a_list_and_retrieve_it_later(self):
+    def testTitle(self):
         self.browser.get('http://localhost:8000/task/info/')
         self.assertIn('InfoPage', self.browser.title)
-        self.fail('Finish the test!')
+
 
 
 
@@ -33,7 +33,7 @@ class DataTest(TestCase):
     def test_1(self):
         ''' will error on assertion'''
         Buddy = Info.objects.get(info_firstname="Buddy")
-        self.assertEqual(Buddy.info_firstname, "Budd")
+        self.assertEqual(Buddy.info_firstname, "Buddy")
 
 
 if __name__ == '__main__':  #7
