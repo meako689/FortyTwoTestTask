@@ -30,3 +30,4 @@ def show_info_a(request, id=1):
 def get_messages(request):
     infos = Info.objects.all()
     render_to_response('messages.html',{'message': infos} )
+
