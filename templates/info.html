@@ -1,22 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>InfoPage</title>
-      <style type="text/css">
-   #layer1 {
-    position:absolute;
-	top: 50px;
-	left: 50px
-   }
-   #layer2 {
-    position:absolute;
-	top: 50px;
-	left: 300px;
-   }
-  </style>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/screen.css' %}">
+
 </head>
 <body>
-
+<div>
 
 
 		{% for info in allinfo %}
@@ -25,20 +18,17 @@
             <p>First name: {{ info.info_firstname }}</p>
 			<p>Last name: {{ info.info_lastname }}</p>
             <p>Birth date: {{ info.info_birth }}</p>
-			<p>Bio:  {{ info.info_bio }}</p>
+			<div id="text"><p>Bio: {{ info.info_bio }}</p></div>
         </div>
              <div align="left" id="layer2">
             <h4>Contacts</h4>
 			<p>E-mail: {{ info.info_email }}</p>
 			<p>Jabber: {{ info.info_jabber }}</p>
             <p>Skype: {{ info.info_skype  }}</p>
-            <p>Other: {{ info.info_other }}</p>
+            <div id="text"><p>Other: {{ info.info_other }}</p></div>
             </div>
-
-
-
 		 {% endfor %}
-
+</div>
 </body>
 </html>
 

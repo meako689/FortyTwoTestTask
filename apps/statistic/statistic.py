@@ -1,4 +1,4 @@
-
+import models
 from datetime import datetime
 import logging
 
@@ -44,7 +44,7 @@ class LoggingMiddleware(object):
 
     def process_request(self, request):
         from django.conf import settings
-        enabled = getattr(settings, 'LOG_ENABLED', False)
+        enabled = getattr(settings, 'LOG_ENABLED', True)
         logfile = getattr(settings, 'LOG_FILE', None)
         if not enabled or not logfile:
             request.logger = PhonyLogger()

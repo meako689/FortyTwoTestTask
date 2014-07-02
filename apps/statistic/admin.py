@@ -1,5 +1,7 @@
 from django.contrib import admin
-from models import WebRequest
+
+from apps.statistic.models import WebRequest
+
 
 # Register your models here.
 

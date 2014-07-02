@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from apps.hello.views import show_info, get_messages
 
 urlpatterns = patterns('',
     # Examples:
@@ -7,8 +8,8 @@ urlpatterns = patterns('',
 
 
 
-    url(r'^messages/', 'hello.views.get_messages'),
-    url(r'^info/', 'hello.views.show_info'),
+    url(r'^messages/', get_messages),
+    url(r'^info/', show_info),
 
 
 
