@@ -10,8 +10,7 @@ urlpatterns = patterns('',
 
     url(r'^messages/', get_messages),
     url(r'^info_all/', show_info_all),
-    url(r'^info/', show_info)
-
+    url(r'^info/(?P<id>\d+)/$', show_info),
 
 
 
