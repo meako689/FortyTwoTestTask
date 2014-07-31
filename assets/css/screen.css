@@ -1,1 +1,27 @@
- 
+div
+
+#layer1 {
+    left: 50px;
+    position: absolute;
+    top: 50px;
+}
+#layer2 {
+    left: 500px;
+    position: absolute;
+    top: 50px;
+}
+#text {
+    width: 400px;
+}
+
+h4{
+    font: 130% serif
+}
+
+p{
+    margin-left: 20px;
+}
+#field{
+    font: 130% serif
+    style: bold;
+}

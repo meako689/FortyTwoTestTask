@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.hello',
+    'apps.statistic',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,6 +52,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'statistic.statistic.LoggingMiddleware',
 )
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
@@ -121,4 +126,8 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
+)
+
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'hello/fixtures')
 )
