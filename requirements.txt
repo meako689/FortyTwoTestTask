@@ -1,3 +1,1 @@
 Django
-South>=1.0
-importlib==1.0.3 #for old python versions
