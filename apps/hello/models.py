@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Request:
+class Request(models.Model):
 	method = models.CharField(max_length=10)
 	path = models.TextField()
 	user = models.TextField()
