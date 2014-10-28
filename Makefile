@@ -11,11 +11,11 @@ syncdb:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) syncdb --noinput
 
 schemamigrate:
-	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) schemamigrate --auto
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) schemamigrate apps.hello --auto
 
 migrate:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) migrate
 
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) collectstatic --noinput
-.PHONY: test syncdb migrate
+.PHONY: test syncdb schemamigrate migrate

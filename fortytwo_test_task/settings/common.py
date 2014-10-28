@@ -42,8 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.hello',
-    'south',
     'fortytwo_test_task.settings.middlewares',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
