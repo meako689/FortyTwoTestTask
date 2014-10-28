@@ -22,4 +22,4 @@ migrate:
 
 collectstatic:
 	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE) collectstatic --noinput
-.PHONY: test syncdb schemamigrate migrate migrate1
+.PHONY: test syncdb schemamigrate migrate1 migrate 
