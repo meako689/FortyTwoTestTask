@@ -42,7 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.hello',
-    'fortytwo_test_task.settings.middleware',
+    'fortytwo_test_task.settings.middlewares',
 )
 
 MIDDLEWARE_CLASSES = (
