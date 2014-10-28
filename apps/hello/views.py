@@ -7,4 +7,4 @@ def home(request):
 
 def requests(request):
 	requests = Request.objects.all()
-	return render(request, 'requests.html', requests:requests)
+	return render(request, 'requests.html', locals())
