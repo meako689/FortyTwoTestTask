@@ -18,5 +18,4 @@ def requests(request):
 	except EmptyPage:
 	# If page is out of range (e.g. 9999), deliver last page of results.
 		contacts = paginator.page(paginator.num_pages)
-
-return render(request, 'requests.html', locals())
+	return render(request, 'requests.html', locals())
