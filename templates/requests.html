@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title%} Main page {% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="span6">
+	<table>
+	{%  for request in requests %}
+		<tr>
+			<td>{{request.method}}</td>
+			<td>{{request.path}}</td>
+			<td>{{request.user}}</td>
+
+		</tr>
+		
+	{%endfor%}
+	</div>
+	<table>
+</div>
+
+{% endblock%}
