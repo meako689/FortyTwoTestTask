@@ -8,8 +8,7 @@ def home(request):
 
 def requests(request):
 	requests = Request.objects.all()
-    paginator = Paginator(requests, 25) # Show 25 contacts per page
-
+	paginator = Paginator(requests, 25) # Show 25 contacts per page
     page = request.GET.get('page')
     try:
         contacts = paginator.page(page)
