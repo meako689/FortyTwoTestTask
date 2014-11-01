@@ -5,4 +5,4 @@ class SomeTests(TestCase):
     def response_test(self):
     	c = Client()
         response = c.get('/')
-        assert(response.status_code == '100')
+        assert(response.status_code == '200')
