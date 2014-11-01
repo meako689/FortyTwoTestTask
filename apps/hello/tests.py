@@ -1,6 +1,8 @@
 from django.test import TestCase
+from django.test.client import Client
 
-# Create your tests here.
-class SomeTests(TestCase):
-    def test_math(self):
-        assert(2+2==5)
+class TicketOne(TestCase):
+    def response_test(self):
+    	c = Client()
+        response = c.get('/')
+        assert(response.status_code == '200')
