@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.client import Client
 
-class SomeTests(TestCase):
+class TicketOne(TestCase):
     def response_test(self):
     	c = Client()
         response = c.get('/')
