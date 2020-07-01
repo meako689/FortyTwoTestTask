@@ -15,3 +15,5 @@ media
 static
 *.dat
 .env
+.idea/
+fortytwo_test_task/local_settings.py
