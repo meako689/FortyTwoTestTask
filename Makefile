@@ -45,9 +45,9 @@ shell:
 	$(MANAGE) shell
 
 lint:
-	jinjalint .
 	./bin/check_noqa.sh
 	./bin/check_layout.sh
+	jinjalint templates
 	$(flake8) apps
 	black apps
 
