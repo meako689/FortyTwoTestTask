@@ -69,5 +69,6 @@ migrate:
 migrations:
 	$(MANAGE) makemigrations
 
-check_noqa:
-	./check_noqa.sh
+eslint:
+	node_modules/.bin/eslint .
+
