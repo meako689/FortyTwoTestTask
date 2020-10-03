@@ -75,4 +75,3 @@ migrations:
 
 eslint:
 	node_modules/.bin/eslint .
-
