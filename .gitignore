@@ -16,4 +16,5 @@ static
 *.dat
 .env
 .idea/
-fortytwo_test_task/local_settings.py
+fortytwo_test_task/settings/local.py
+/node_modules/

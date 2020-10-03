@@ -44,13 +44,17 @@ shell:
 	@echo Starting shell...
 	$(MANAGE) shell
 
-flake8:
+lint:
+	jinjalint .
+	./bin/check_noqa.sh
+	./bin/check_layout.sh
 	$(flake8) apps
+	black apps
 
 djangotest:
 	TESTING=1 PYTHONWARNINGS=ignore $(MANAGE_CMD) test --settings=$(TEST_SETTINGS) $(TEST_APP)
 
-test: flake8 djangotest
+test: lint djangotest
 
 collectstatic: clean
 	@echo Collecting static
