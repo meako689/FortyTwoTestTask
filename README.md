@@ -1,17 +1,17 @@
 42-test template
 ===========================
 
-A Django 1.6+ project template
+A Django 3+ project template
 
 Use fortytwo_test_task.settings when deploying with getbarista.com
 
-### Recomendations
+### Requirements
 * apps in apps/ folder
-* use per-app templates folders
-* use per-app static folders
 * use migrations
-* use settings.local for different environments
-* common templates live in templates/
-* common static lives in assets/
+* use local.py for different local settings
+* templates live in templates/
+* static lives in assets/
 * management commands should be proxied to single word make commands, e.g make test
-
+* run `make lint` often
+* installed node and yarn. after cloning the project run `yarn`
+* lint your js, run `make eslint`
