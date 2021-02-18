@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    container_name: backend
+    restart: always
+    #  mount the volumes so we can change code and hot reload
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+    container_name: frontend
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
