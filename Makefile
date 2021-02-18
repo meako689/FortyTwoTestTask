@@ -1,18 +1,18 @@
 # Dev servers
-RUN=./docker/compose.sh
-MANAGE=$(RUN) exec backend python manage.py
+EXEC=./docker/exec.sh
+MANAGE=$(EXEC) backend python manage.py
 TEST_SETTINGS=fortytwo.test_settings
 TEST_APP=apps/
 
 debug:
-	$(RUN) exec backend touch test.file
+	$(EXEC) backend touch test.file
 
 run:
 	@echo Starting http://127.0.0.1:8000
-	$(RUN) up
+	./docker/compose.sh up
 
 build:
-	$(RUN) build
+	./docker/componse.sh build
 
 # Database
 migrate:
@@ -33,16 +33,13 @@ shell:
 	$(MANAGE) shell
 
 lint:
-	$(RUN) exec ./scripts/lint.sh
+	$(EXEC) backend ./scripts/lint.sh
 
 djangotest:
-	$(MANAGE) test --settings=$(TEST_SETTINGS) $(TEST_APP) -v 2 --noinput
+	$(MANAGE) test --settings=$(TEST_SETTINGS) $(TEST_APP) --noinput
 
 coverage:
-	$(RUN) exec backend python coverage run manage.py test --settings=$(TEST_SETTINGS) $(TEST_APP) -v 2 && coverage html
-
-report:
-	${BROWSER} htmlcov/index.html
+	coverage run manage.py test --settings=$(TEST_SETTINGS) $(TEST_APP) && coverage report -i
 
 test: lint djangotest
 
@@ -51,4 +48,4 @@ collectstatic:
 	$(MANAGE) collectstatic --noinput
 
 eslint:
-	$(RUN) exec frontend sh -c "cd frontend && yarn lint src --fix"
+	$(EXEC) frontend sh -c "cd frontend && yarn lint src --fix"

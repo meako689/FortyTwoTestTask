@@ -1,8 +1,7 @@
 [tool.black]
 line-length = 120
-target-version = ['py37']
+target-version = ['py39']
 include = '\.pyi?$'
-skip-string-normalization = true
 exclude = '''
 (
   /(
@@ -29,4 +28,3 @@ omit = ['*/migrations/*', '*/tests/*', '*/apps.py', '__init__.py',]
 [tool.coverage.report]
 fail_under = 95
 exclude_lines = ['def __str__']
-skip_covered = true
