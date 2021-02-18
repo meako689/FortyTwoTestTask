@@ -7,25 +7,25 @@
 <script>
 export default {
   name: 'Ping',
+  data() {
+    return {alive: false, fetchInterval: null};
+  },
+  mounted() {
+    this.fetchInterval = setInterval(this.checkIsAlive, 1000);
+  },
+  unmounted() {
+    this.fetchInterval && clearInterval(this.fetchInterval);
+  },
   methods: {
    async checkIsAlive() {
      const response = await fetch('/api/ping');
      if (response.statusCode !== 200) {
        this.alive = false;
      } else {
-       const data = await response.json()
+       const data = await response.json();
        this.alive = data.status;
      }
    }
   },
-  data() {
-    return {alive: false, fetchInterval: null}
-  },
-  mounted() {
-    this.fetchInterval = setInterval(this.checkIsAlive, 1000);
-  },
-  unmounted() {
-    this.fetchInterval && clearInterval(this.fetchInterval)
-  },
-}
+};
 </script>

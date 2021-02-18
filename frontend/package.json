@@ -12,17 +12,19 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "autoprefixer": "^10.2.4",
+    "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
-    "postcss": "^8.2.6",
-    "tailwindcss": "^2.0.3",
+    "postcss": "^7",
+    "sass-loader": "^11.0.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "webpack-manifest-plugin": "^3.0.0"
   },
   "eslintConfig": {

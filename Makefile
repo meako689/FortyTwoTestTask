@@ -92,4 +92,4 @@ collectstatic:
 	$(MANAGE) collectstatic --noinput
 
 eslint:
-	cd ui && yarn lint src --fix
+	cd frontend && yarn lint src --fix
