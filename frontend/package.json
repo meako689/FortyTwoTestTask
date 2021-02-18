@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "STATIC_URL=http://localhost:3000/ vue-cli-service serve",
+    "build": "STATIC_URL=/static/ vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -19,13 +19,13 @@
     "@vue/compiler-sfc": "^3.0.0",
     "autoprefixer": "^9",
     "babel-eslint": "^10.1.0",
-    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
     "postcss": "^7",
-    "sass-loader": "^11.0.1",
+    "sass": "^1.32.7",
+    "sass-loader": "9.0.3",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "webpack-manifest-plugin": "^3.0.0"
+    "webpack4-bundle-tracker": "^0.0.1-beta"
   },
   "eslintConfig": {
     "root": true,

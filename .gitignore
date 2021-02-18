@@ -16,5 +16,7 @@ static
 *.dat
 .env
 .idea/
-fortytwo_test_task/settings/local.py
+fortytwo/local_settings.py
 frontend/node_modules/*
+frontend/dist/*
+frontend/manifest.json

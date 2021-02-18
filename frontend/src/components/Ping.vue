@@ -1,6 +1,12 @@
 <template>
-  <div class="text-white">
-    Status: <div class="rounded-full h-10 w-10 flex items-center justify-center" :status="`${alive ? 'bg-green-50' : 'bg-red-50'}`" />
+  <div class="text-white flex items-center justify-center">
+    <span class="text-xl">API Status:</span>&nbsp;
+    <div
+      class="rounded-full h-10 w-10 inline-block font-mono flex items-center justify-center"
+      :class="[alive === undefined ? 'bg-gray-500' : alive ? 'bg-green-500' : 'bg-red-500']"
+    >
+      {{ statusCode }}
+    </div>
   </div>
 </template>
 
@@ -8,7 +14,7 @@
 export default {
   name: 'Ping',
   data() {
-    return {alive: false, fetchInterval: null};
+    return {alive: undefined, fetchInterval: null, statusCode: '---'};
   },
   mounted() {
     this.fetchInterval = setInterval(this.checkIsAlive, 1000);
@@ -18,8 +24,9 @@ export default {
   },
   methods: {
    async checkIsAlive() {
-     const response = await fetch('/api/ping');
-     if (response.statusCode !== 200) {
+     const response = await fetch('/api/hello/ping/');
+     this.statusCode = response.status;
+     if (response.status !== 200) {
        this.alive = false;
      } else {
        const data = await response.json();

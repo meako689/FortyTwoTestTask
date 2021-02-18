@@ -1,13 +1,17 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const BundleTracker = require('webpack4-bundle-tracker');
 const entry = (name) => path.resolve('src', `${name}.js`);
 
 module.exports = {
-  publicPath: '/static/',
-  chainWebpack: config => {
+  // requires to run the `serve` or `build` command with correct STATIC_URL env var
+  publicPath: process.env.STATIC_URL,
+  chainWebpack: (config) => {
     config.optimization
       .splitChunks(false);
+
+    config
+      .plugin('BundleTracker')
+      .use(BundleTracker, [{filename: 'manifest.json'}]);
 
     config.resolve.alias
       .set('__STATIC__', 'static');
@@ -33,10 +37,6 @@ module.exports = {
         '/frontend': path.resolve(__dirname)
       }
     },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new WebpackManifestPlugin({basePath: 'static/'}),
-    ]
   },
   pages: {
     main: entry('main'),
