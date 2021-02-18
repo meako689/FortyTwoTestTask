@@ -12,8 +12,6 @@ services:
       - .:/app
     ports:
       - 8000:8000
-    depends_on:
-      - frontend
 
   frontend:
     build:
@@ -24,3 +22,4 @@ services:
       - .:/app
     ports:
       - 3000:3000
+    user: ${CURRENT_UID}
