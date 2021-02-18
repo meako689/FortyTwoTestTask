@@ -4,12 +4,12 @@
 
 SHELL=/bin/bash
 
-PROJECT_NAME=fortytwo_test_task
-BIND_TO=localhost
+BIND_TO=0.0.0.0
 RUNSERVER_PORT=8000
-SETTINGS=fortytwo_test_task.settings
-TEST_SETTINGS=fortytwo_test_task.settings.test
-TEST_APP?=apps
+SETTINGS=fortytwo.settings
+TEST_SETTINGS=fortytwo.test_settings
+FLAKE8_APP?=apps/
+TEST_APP?=apps/
 flake8=flake8
 
 PYTHONPATH=$(CURDIR)
@@ -17,6 +17,8 @@ PYTHONPATH=$(CURDIR)
 MANAGE_PREFIX= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS)
 MANAGE_CMD=./manage.py
 MANAGE= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE_CMD)
+A?=
+
 
 -include Makefile.def
 
@@ -28,11 +30,23 @@ MANAGE= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE_CMD
 # targets
 #
 
-.PHONY: run syncdb initproject dumpdata shell flake8 djangotest collectstatic clean manage migrate only_migrate init_migrate
+.PHONY: run syncdb initproject dumpdata shell flake8 djangotest collectstatic clean manage migrate migrations
 
+# Dev servers
 run:
-	@echo Starting $(PROJECT_NAME)...
+	@echo Starting backend server...
 	$(MANAGE) runserver $(BIND_TO):$(RUNSERVER_PORT)
+
+serve:
+	@echo Starting frontend server...
+	cd frontend && yarn serve
+
+# Database
+migrate:
+	$(MANAGE) migrate --noinput
+
+migrations:
+	$(MANAGE) makemigrations
 
 createcachetable:
 	@echo Creating cache table
@@ -40,6 +54,7 @@ createcachetable:
 
 initproject: migrate createcachetable
 
+# Dev tools
 shell:
 	@echo Starting shell...
 	$(MANAGE) shell
@@ -52,26 +67,29 @@ lint:
 	black apps
 
 djangotest:
-	TESTING=1 PYTHONWARNINGS=ignore $(MANAGE_CMD) test --settings=$(TEST_SETTINGS) $(TEST_APP)
+	TESTING=1 PYTHONWARNINGS=ignore $(MANAGE_CMD) test --settings=$(TEST_SETTINGS) $(TEST_APP) -v 2 --noinput
 
-test: lint djangotest
+coverage:
+	TESTING=1 PYTHONWARNINGS=ignore $(MANAGE_PREFIX) coverage run \
+	    $(MANAGE_CMD) test --settings=$(TEST_SETTINGS) $(TEST_APP) -v 2 && coverage html
 
-collectstatic: clean
-	@echo Collecting static
-	$(MANAGE) collectstatic --noinput
-	@echo Done
+report:
+	${BROWSER} htmlcov/index.html
 
 clean:
 	@echo Cleaning up...
 	find ./ -name '__pycache__' -print|xargs -I {} rm -r {}
-	find staticfiles/generated/ -type f | xargs -I {} rm {}
-	@echo Done
 
-migrate:
-	$(MANAGE) migrate
+test: lint djangotest
 
-migrations:
-	$(MANAGE) makemigrations
+# Static files
+build:
+	@echo Building static files
+	cd frontend && yarn && yarn build
+
+collectstatic:
+	@echo Collecting static files
+	$(MANAGE) collectstatic --noinput
 
 eslint:
-	node_modules/.bin/eslint .
+	cd ui && yarn lint src --fix
