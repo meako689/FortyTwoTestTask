@@ -1,18 +1,15 @@
 # Dev servers
-EXEC=./docker/exec.sh
-MANAGE=$(EXEC) backend python manage.py
+CMD_PREFIX=./docker/compose.sh
+MANAGE=$(CMD_PREFIX) run backend python manage.py
 TEST_SETTINGS=fortytwo.test_settings
 TEST_APP=apps/
 
-debug:
-	$(EXEC) backend touch test.file
-
 run:
 	@echo Starting http://127.0.0.1:8000
-	./docker/compose.sh up
+	$(CMD_PREFIX) up
 
 build:
-	./docker/componse.sh build
+	$(CMD_PREFIX) build
 
 # Database
 migrate:
@@ -33,7 +30,7 @@ shell:
 	$(MANAGE) shell
 
 lint:
-	$(EXEC) backend ./scripts/lint.sh
+	$(CMD_PREFIX) run backend sh -c "black apps && flake8 apps"
 
 djangotest:
 	$(MANAGE) test --settings=$(TEST_SETTINGS) $(TEST_APP) --noinput
@@ -48,4 +45,4 @@ collectstatic:
 	$(MANAGE) collectstatic --noinput
 
 eslint:
-	$(EXEC) frontend sh -c "cd frontend && yarn lint src --fix"
+	$(CMD_PREFIX) run frontend sh -c "cd frontend && yarn lint src --fix"

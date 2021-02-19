@@ -7,5 +7,5 @@ class HelloAPITest(APITestCase):
         """
         endpoint is accessible and always return same status
         """
-        response = self.client.get(reverse('api_hello:ping'))
-        self.assertTrue(response.json()['status'])
+        response = self.client.get(reverse("api_hello:ping"))
+        self.assertTrue(response.json()["status"])
