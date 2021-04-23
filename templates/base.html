@@ -1,22 +1,52 @@
-{% load staticfiles %}
+{% load render_entrypoint from webpack_loader %}
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}{% endblock title %}Site Name</title>
-
-        <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
-
-        <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-        <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
-
-        {% block extra_head %}{% endblock extra_head %}
-
-    </head>
-    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        {% block content %}{% endblock content %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>42 Coffee Cups | Test Task</title>
+    {% render_entrypoint 'main' 'css' %}
+    {% if DEBUG %}
+        {# vue-devtools #}
+        <script src="http://localhost:8098"></script>
+    {% endif %}
+</head>
+<body>
+<noscript>
+    <strong>
+        We're sorry but the site doesn't work properly without JavaScript enabled. Please enable it to continue.
+    </strong>
+</noscript>
+<div id="not-supported-browser" style="visibility: hidden; display:none">
+    <h1>Browser not supported</h1>
+</div>
+<script>
+    var supportsES6 = function () {
+        try {
+            new Function('(a = 0) => a');
+            return true;
+        } catch (err) {
+            return false;
+        }
+    };
+    var isIE = function () {
+        ua = navigator.userAgent;
+        /* MSIE used to detect old browsers and Trident used to newer ones*/
+        var is_ie = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1;
+        return is_ie;
+    }
+    var compatibleBrowser = !isIE() && supportsES6() && typeof Object['__defineSetter__'] === 'function';
+    var el = document.getElementById('not-supported-browser');
+    if (!compatibleBrowser) {
+        el.style.display = 'block';
+        el.style.visibility = 'visible';
+    } else {
+        el.remove();
+    }
+</script>
+<pre id="main"></pre>
+</body>
+{% render_entrypoint 'main' 'js' %}
 </html>

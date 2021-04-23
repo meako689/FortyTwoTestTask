@@ -2,8 +2,6 @@
 line-length = 120
 target-version = ['py37']
 include = '\.pyi?$'
-skip-string-normalization = true
-check = true
 exclude = '''
 (
   /(
@@ -17,7 +15,16 @@ exclude = '''
     | buck-out
     | build
     | dist
-    | migrations/*
+    | migrations/.*
   )/
 )
 '''
+
+[tool.coverage.run]
+branch = true
+source = ['apps/']
+omit = ['*/migrations/*', '*/tests/*', '*/apps.py', '__init__.py',]
+
+[tool.coverage.report]
+fail_under = 95
+exclude_lines = ['def __str__']
