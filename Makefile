@@ -68,12 +68,18 @@ endif
 
 # Deploy
 DEPLOY_CONT_ID=fortytwotesttask
-
-stage-build:
+build:
+ifeq (,$(USE_LOCAL))
 	docker build --tag=$(DEPLOY_CONT_ID):latest .
+else
+	yarn --cwd frontend install
+	yarn --cwd frontend build
+	$(MAKE) collectstatic
+endif
 
-stage-run:
+server:
+ifeq (,$(USE_LOCAL))
 	docker run -p=8000:8000 --rm --name $(DEPLOY_CONT_ID) $(DEPLOY_CONT_ID):latest
-
-stage-stop:
-	docker stop $(DEPLOY_CONT_ID)
+else
+	gunicorn fortytwo.wsgi -b 0.0.0.0:8000
+endif
