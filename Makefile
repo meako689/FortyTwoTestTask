@@ -1,38 +1,22 @@
-#
-# constants
-#
-
-SHELL=/bin/bash
-
-PROJECT_NAME=fortytwo_test_task
-BIND_TO=localhost
-RUNSERVER_PORT=8000
-SETTINGS=fortytwo_test_task.settings
-TEST_SETTINGS=fortytwo_test_task.settings.test
-TEST_APP?=apps
-flake8=flake8
-
-PYTHONPATH=$(CURDIR)
-
-MANAGE_PREFIX= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS)
-MANAGE_CMD=./manage.py
-MANAGE= PYTHONPATH=$(PYTHONPATH) DJANGO_SETTINGS_MODULE=$(SETTINGS) $(MANAGE_CMD)
-
--include Makefile.def
-
-#
-# end of constants
-#
-
-#
-# targets
-#
-
-.PHONY: run syncdb initproject dumpdata shell flake8 djangotest collectstatic clean manage migrate only_migrate init_migrate
+# Dev servers
+CMD_PREFIX=./docker/compose.sh
+MANAGE=$(CMD_PREFIX) run backend python manage.py
+TEST_SETTINGS=fortytwo.test_settings
+TEST_APP=apps/
 
 run:
-	@echo Starting $(PROJECT_NAME)...
-	$(MANAGE) runserver $(BIND_TO):$(RUNSERVER_PORT)
+	@echo Starting http://127.0.0.1:8000
+	$(CMD_PREFIX) up
+
+build:
+	$(CMD_PREFIX) build
+
+# Database
+migrate:
+	$(MANAGE) migrate --noinput
+
+migrations:
+	$(MANAGE) makemigrations
 
 createcachetable:
 	@echo Creating cache table
@@ -40,38 +24,25 @@ createcachetable:
 
 initproject: migrate createcachetable
 
+# Testing
 shell:
 	@echo Starting shell...
 	$(MANAGE) shell
 
 lint:
-	./bin/check_noqa.sh
-	./bin/check_layout.sh
-	jinjalint templates
-	$(flake8) apps
-	black apps
+	$(CMD_PREFIX) run backend sh -c "black apps && flake8 apps"
 
 djangotest:
-	TESTING=1 PYTHONWARNINGS=ignore $(MANAGE_CMD) test --settings=$(TEST_SETTINGS) $(TEST_APP)
+	$(MANAGE) test --settings=$(TEST_SETTINGS) $(TEST_APP) --noinput
+
+coverage:
+	coverage run manage.py test --settings=$(TEST_SETTINGS) $(TEST_APP) && coverage report -i
 
 test: lint djangotest
 
-collectstatic: clean
-	@echo Collecting static
+collectstatic:
+	@echo Collecting static files
 	$(MANAGE) collectstatic --noinput
-	@echo Done
-
-clean:
-	@echo Cleaning up...
-	find ./ -name '__pycache__' -print|xargs -I {} rm -r {}
-	find staticfiles/generated/ -type f | xargs -I {} rm {}
-	@echo Done
-
-migrate:
-	$(MANAGE) migrate
-
-migrations:
-	$(MANAGE) makemigrations
 
 eslint:
-	node_modules/.bin/eslint .
+	$(CMD_PREFIX) run frontend sh -c "cd frontend && yarn lint src --fix"

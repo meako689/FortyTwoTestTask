@@ -1,0 +1,4 @@
+**/node_modules
+fortytwo/local_settings.py.example
+frontend/dist
+frontend/manifest.json

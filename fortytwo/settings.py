@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
-BASE_DIR = os.path.dirname(PROJECT_DIR)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +24,7 @@ SECRET_KEY = 'nwvy4v3acf*oxu$k(_bkue3m1x6nzaw$a=z^uk1e82)ou#d&8l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -50,12 +50,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'fortytwo_test_task.urls'
+ROOT_URLCONF = 'fortytwo.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'fortytwo_test_task.wsgi.application'
+WSGI_APPLICATION = 'fortytwo.wsgi.application'
 
 
 # Database
@@ -119,3 +119,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticroot')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend', 'dist')]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'manifest.json')
+    }
+}
+
+
+try:
+    from .local_settings import *  # noqa
+except ImportError:  # noqa
+    print('No local_settings.py found')
+except Exception as e:
+    print(f'Error loading local_settings.py: {e}')

@@ -1,4 +1,4 @@
-from .common import *  # noqa
+from fortytwo.settings import *
 
 DATABASES = {
     'default': {
