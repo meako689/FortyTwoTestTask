@@ -7,7 +7,6 @@ services:
       dockerfile: docker/backend.Dockerfile
     container_name: backend
     restart: always
-    #  mount the volumes so we can change code and hot reload
     volumes:
       - .:/app
     ports:

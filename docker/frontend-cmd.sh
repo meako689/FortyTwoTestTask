@@ -1,3 +1,1 @@
-cd /app/frontend
-yarn
-yarn serve
+yarn --cwd /app/frontend serve
