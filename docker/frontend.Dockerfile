@@ -1,6 +1,7 @@
 FROM node:15-alpine
 
 WORKDIR /app
-ADD . /app
+COPY . /app
+RUN yarn --cwd /app/frontend install
 
 CMD docker/frontend-cmd.sh
