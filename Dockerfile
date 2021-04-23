@@ -9,12 +9,10 @@ FROM python:3-alpine
 WORKDIR /app
 ADD . /app
 RUN apk update \
-    && apk add make supervisor \
     && pip install gunicorn \
     && pip install -r requirements/base.txt \
-    && echo "files = /app/docker/conf/supervisor.ini" >> /etc/supervisord.conf \
     && rm -rf /var/cache/apk/*
 COPY --from=frontend /app ./frontend
-RUN python manage.py collectstatic
+RUN python manage.py collectstatic --noinput
 
 CMD docker/backend-cmd.sh

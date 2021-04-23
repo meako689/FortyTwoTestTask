@@ -81,5 +81,14 @@ server:
 ifeq (,$(USE_LOCAL))
 	docker run -p=8000:8000 --rm --name $(DEPLOY_CONT_ID) $(DEPLOY_CONT_ID):latest
 else
-	gunicorn fortytwo.wsgi -b 0.0.0.0:8000
+	./docker/backend-cmd.sh
+endif
+
+h-deploy:
+ifeq (,$(HEROKU_APP_NAME))
+	@echo Missing HEROKU_APP_NAME env var
+else
+	@echo Deploying on heroku
+	heroku container:push web --app $(HEROKU_APP_NAME)
+	heroku container:release web --app $(HEROKU_APP_NAME)
 endif
